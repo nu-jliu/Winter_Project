@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+    <include file="$(find ridgeback_gazebo)/launch/ridgeback_world.launch" />
+    <node pkg="motion_control" type="motion_control_ridgeback_drive_node" name="ridgeback_drive" />
+</launch>
