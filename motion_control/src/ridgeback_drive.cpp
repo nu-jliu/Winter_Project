@@ -12,7 +12,7 @@ int main(int argc, char **argv)
     while (ros::ok())
     {
         geometry_msgs::Twist msg;
-        msg.linear.x = -1.0;
+        msg.linear.x = 0.0;
         msg.linear.y = 0.0;
         msg.linear.z = 0.0;
 

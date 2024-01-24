@@ -1,5 +1,17 @@
 <?xml version="1.0"?>
 <launch>
-    <include file="$(find ridgeback_gazebo)/launch/ridgeback_world.launch" />
-    <node pkg="motion_control" type="motion_control_ridgeback_drive_node" name="ridgeback_drive" />
+    <arg name="simation" default="true" doc="if it is simulation mode"/>
+    
+    <include file="$(find ridgeback_viz)/launch/view_robot.launch">
+        <arg name="config" value="navigation"/>
+    </include>
+    <include file="$(find ridgeback_navigation)/launch/odom_navigation_demo.launch">
+        
+    <group if="$(arg simulation)">
+        <include file="$(find ridgeback_gazebo)/launch/ridgeback_world.launch" />
+        <!-- <node pkg="motion_control" type="motion_control_ridgeback_drive_node" name="ridgeback_drive" /> -->
+    </group>
+
+    </include>
+
 </launch>
