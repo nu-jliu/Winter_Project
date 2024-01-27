@@ -13,12 +13,12 @@ int main(int argc, char **argv)
     {
         geometry_msgs::Twist msg;
         msg.linear.x = 0.0;
-        msg.linear.y = 0.0;
+        msg.linear.y = 1.0;
         msg.linear.z = 0.0;
 
         msg.angular.x = 0.0;
         msg.angular.y = 0.0;
-        msg.angular.z = 0.1;
+        msg.angular.z = 0.0;
 
         ROS_INFO("Sending cmd_vel %f", msg.linear.x);
         pub_cmd_vel.publish(msg);

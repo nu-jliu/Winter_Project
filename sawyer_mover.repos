@@ -1,0 +1,5 @@
+repositories:
+  sawyer_moveit:
+    type: git
+    url: https://github.com/RethinkRobotics/sawyer_moveit.git
+    version: master
