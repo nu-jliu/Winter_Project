@@ -164,6 +164,7 @@ catkin_install_python(PROGRAMS
   scripts/move_sawyer_ik.py
   scripts/move_sawyer_cartesian.py
   scripts/sawyer_mover.py
+  scripts/move_gripper.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
@@ -187,6 +188,9 @@ install(TARGETS ${PROJECT_NAME}_node
 #   FILES_MATCHING PATTERN "*.h"
 #   PATTERN ".svn" EXCLUDE
 # )
+install(DIRECTORY config/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/config
+)
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES

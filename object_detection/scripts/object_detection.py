@@ -7,6 +7,11 @@ from cv_bridge import CvBridge
 
 from sensor_msgs.msg import PointCloud2
 from sensor_msgs.msg import Image
+from geometry_msgs.msg import TransformStamped
+
+import tf
+from tf2_ros.transform_broadcaster import TransformBroadcaster
+from tf2_ros.static_transform_broadcaster import StaticTransformBroadcaster
 
 
 class ObjectDetection:
@@ -43,7 +48,26 @@ class ObjectDetection:
             queue_size=10,
         )
 
-        self.pub_image = rospy.Publisher("detect/image_raw", Image, queue_size=10)
+        self.pub_image = rospy.Publisher("/robot/head_display", Image, queue_size=10)
+
+        self.tf_broadcaster = TransformBroadcaster()
+        self.tf_static_broadcaster = StaticTransformBroadcaster()
+
+        tf_static = TransformStamped()
+
+        tf_static.header.stamp = rospy.Time.now()
+        tf_static.header.frame_id = "base"
+        tf_static.child_frame_id = "camera_link"
+        tf_static.transform.translation.x = 200e-3
+        tf_static.transform.translation.y = -60e-3
+        tf_static.transform.translation.z = 120e-3
+
+        tf_static.transform.rotation.x = 0.0
+        tf_static.transform.rotation.y = 0.0
+        tf_static.transform.rotation.z = 0.0
+        tf_static.transform.rotation.w = 1.0
+
+        self.tf_static_broadcaster.sendTransform(tf_static)
 
     def timer_callback(self, event):
         rospy.loginfo_once("Timer event")
@@ -54,59 +78,61 @@ class ObjectDetection:
 
             if results is not None:
                 for result in results:
-
-                    # rospy.loginfo(f"Names: {result.names}")
                     boxes = result.boxes
-                    # rospy.loginfo(f"Got boxes {boxes.xyxy.}")
-                    for box in boxes:
-                        # rospy.loginfo(f"cls: {box.cls}")
-                        # rospy.loginfo(f"{box.xyxy.numpy()}")
-                        coordinates = box.xywh.numpy()[0]
-                        x = coordinates[0]
-                        y = coordinates[1]
-                        # w = coordinates[2]
-                        # h = coordinates[3]
 
-                        # rospy.loginfo(f"X: {x}")
-                        # rospy.loginfo(f"Y: {y}")
-                        # rospy.loginfo(f"W: {w}")
-                        # rospy.loginfo(f"H: {h}")
+                    if self.depth_image is not None:
+                        for box in boxes:
+                            coordinates = box.xywh.numpy()[0]
+                            x = coordinates[0]
+                            y = coordinates[1]
 
-                        # rospy.loginfo(f"width: {self.depth_image.width}")
-                        # rospy.loginfo(f"height: {self.depth_image.height}")
-                        # rospy.loginfo(f"Step: {self.depth_image.step}")
-                        # rospy.loginfo(f"size: {len(self.depth_image.data)}")
+                            x_depth = x * self.depth_image.width / self.msg_image.width
+                            y_depth = y * self.depth_image.height / self.msg_image.width
 
-                        x_depth = x * self.depth_image.width / self.msg_image.width
-                        y_depth = y * self.depth_image.height / self.msg_image.width
+                            col_first = round(x_depth * 2 - 0.5)
+                            col_second = round(x_depth * 2 + 0.5)
+                            row = round(y_depth)
 
-                        # rospy.loginfo(f"X depth: {x_depth}")
-                        # rospy.loginfo(f"Y depth: {y_depth}")
+                            depth_first = self.depth_image.data[
+                                row * self.depth_image.step + col_first
+                            ]
+                            depth_second = self.depth_image.data[
+                                row * self.depth_image.step + col_second
+                            ]
 
-                        col_first = round(x_depth * 2 - 0.5)
-                        col_second = round(x_depth * 2 + 0.5)
-                        row = round(y_depth)
+                            depth = float(max(depth_first, depth_second)) * 0.001
+                            rospy.loginfo(
+                                f"Depth in meters: {result.names[int(box.cls)]} -> {depth}"
+                            )
 
-                        depth_first = self.depth_image.data[
-                            row * self.depth_image.step + col_first
-                        ]
-                        depth_second = self.depth_image.data[
-                            row * self.depth_image.step + col_second
-                        ]
+                            # self.tf_broadcaster.sendTransform(
+                            #     [
+                            #         (x_depth - self.depth_image.width / 2.0)
+                            #         * 0.0002645833,
+                            #         (y_depth - self.depth_image.height / 2.0)
+                            #         * 0.0002645833,
+                            #         depth,
+                            #     ],
+                            #     [0.0, 0.0, 0.0, 1.0],
+                            #     rospy.Time.now(),
+                            #     f"object_{result.names[int(box.cls)]}",
+                            #     "camera_depth_optical_frame",
+                            # )
+                            tf_obj = TransformStamped()
+                            tf_obj.header.stamp = rospy.Time.now()
+                            tf_obj.header.frame_id = "camera_depth_optical_frame"
+                            tf_obj.child_frame_id = (
+                                f"object_{result.names[int(box.cls)]}"
+                            )
+                            tf_obj.transform.translation.x = (
+                                x_depth - self.depth_image.width / 2.0
+                            ) * 0.0002645833
+                            tf_obj.transform.translation.y = (
+                                y_depth - self.depth_image.height / 2.0
+                            ) * 0.0002645833
+                            tf_obj.transform.translation.z = depth
 
-                        # rospy.loginfo(f"Depth 1: {depth_first}")
-                        # rospy.loginfo(f"Depth 2: {depth_second}")
-
-                        rospy.loginfo(
-                            f"Depth in meters: {result.names[int(box.cls)]} -> {float(max(depth_first, depth_second)) / 1000.0}"
-                        )
-
-                        # self.depth_image.data
-                    # rospy.loginfo(f"Got boxes {boxes.xyxy}")
-                    # rospy.loginfo(f"Got boxes {boxes.xyxy}")
-                    # rospy.loginfo(f"Got boxes {boxes.xyxy}")
-
-                    # boxes.xyxy[0]
+                            self.tf_broadcaster.sendTransform(tf_obj)
 
                     plot_result = result.plot()
                     self.pub_image.publish(self.bridge.cv2_to_imgmsg(plot_result))

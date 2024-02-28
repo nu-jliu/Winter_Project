@@ -140,6 +140,58 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Class: rviz/TF
+      Enabled: true
+      Filter (blacklist): ""
+      Filter (whitelist): ""
+      Frame Timeout: 15
+      Frames:
+        All Enabled: false
+        camera_color_frame:
+          Value: false
+        camera_color_optical_frame:
+          Value: false
+        camera_depth_frame:
+          Value: false
+        camera_depth_optical_frame:
+          Value: true
+        camera_link:
+          Value: false
+        object_book:
+          Value: true
+        object_bottle:
+          Value: true
+        object_laptop:
+          Value: true
+        object_teddy bear:
+          Value: true
+        object_tv:
+          Value: true
+      Marker Alpha: 1
+      Marker Scale: 0.5
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        camera_link:
+          camera_color_frame:
+            camera_color_optical_frame:
+              {}
+          camera_depth_frame:
+            camera_depth_optical_frame:
+              object_book:
+                {}
+              object_bottle:
+                {}
+              object_laptop:
+                {}
+              object_teddy bear:
+                {}
+              object_tv:
+                {}
+      Update Interval: 0
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -184,9 +236,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.11539817601442337
+      Pitch: 0.5103974938392639
       Target Frame: <Fixed Frame>
-      Yaw: 3.1753995418548584
+      Yaw: 3.1303999423980713
     Saved: ~
 Window Geometry:
   Displays:
