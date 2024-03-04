@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <launch>
     <arg name="camera" default="realsense"/>
+    <arg name="use_rviz" default="false"/>
     <!-- <arg name="" default=""/> -->
     <group if="$(eval arg('camera') == 'realsense')">
         <include file="$(find realsense2_camera)/launch/rs_camera.launch">
@@ -16,5 +17,7 @@
     </group>
     <!-- <remap from="camera/color/image_raw" to="camera/rgb/image_raw"/> -->
     <node pkg="object_detection" type="object_detection.py" name="object_detection" output="screen" />
-    <!-- <node pkg="rviz" type="rviz" name="rviz" args="-d $(find object_detection)/rviz/$(arg camera).rviz"/> -->
+    <group if="$(arg use_rviz)">
+        <node pkg="rviz" type="rviz" name="rviz" args="-d $(find object_detection)/rviz/$(arg camera).rviz"/>
+    </group>
 </launch>

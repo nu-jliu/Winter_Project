@@ -1,0 +1,5 @@
+<include file="$(find sawyer_moveit_config)/launch/moveit_rviz.launch">
+    <arg name="config" value="true" />
+    <arg name="debug" value="false"/>
+    <arg name="rviz_config" value="$(find arm_control)/config/arm_moveit.rviz" />
+</include>

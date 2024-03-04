@@ -7,7 +7,6 @@ Panels:
         - /Global Options1
         - /TF1/Frames1
         - /TF1/Tree1
-        - /TF1/Tree1/world1
       Splitter Ratio: 0.7425600290298462
     Tree Height: 565
   - Class: rviz/Help
@@ -475,20 +474,6 @@ Visualization Manager:
           Value: false
         head_camera:
           Value: false
-        object_cat:
-          Value: false
-        object_dining table:
-          Value: false
-        object_dog:
-          Value: false
-        object_person:
-          Value: false
-        object_remote:
-          Value: false
-        object_skateboard:
-          Value: false
-        object_toilet:
-          Value: false
         pedestal:
           Value: false
         pedestal_feet:
@@ -636,20 +621,7 @@ Visualization Manager:
                   {}
               camera_depth_frame:
                 camera_depth_optical_frame:
-                  object_cat:
-                    {}
-                  object_dining table:
-                    {}
-                  object_dog:
-                    {}
-                  object_person:
-                    {}
-                  object_remote:
-                    {}
-                  object_skateboard:
-                    {}
-                  object_toilet:
-                    {}
+                  {}
             controller_box:
               {}
             pedestal:
@@ -784,11 +756,14 @@ Visualization Manager:
       Hide Inactive Objects: true
     - Class: rviz/MoveCamera
     - Class: rviz/Select
+    - Class: rviz/PublishPoint
+      Single click: true
+      Topic: /clicked_point
   Value: true
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 1.8717575073242188
+      Distance: 1.1080775260925293
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -804,9 +779,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.1747971773147583
+      Pitch: 0.5547971129417419
       Target Frame: base
-      Yaw: 0.14994491636753082
+      Yaw: 2.154945135116577
     Saved: ~
 Window Geometry:
   Displays:

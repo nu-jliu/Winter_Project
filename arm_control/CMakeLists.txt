@@ -191,6 +191,9 @@ install(TARGETS ${PROJECT_NAME}_node
 install(DIRECTORY config/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/config
 )
+install(DIRECTORY urdf/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/urdf
+)
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES

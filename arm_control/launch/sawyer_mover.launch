@@ -1,12 +1,19 @@
 <?xml version="1.0"?>
 <launch>
-    <!-- <include file="$(find sawyer_gazebo)/launch/sawyer_world.launch" >
+    <!-- <include file="$(find sawyer_gazebo)/launch/sawyer_world.launch">
         <arg name="electric_gripper" value="true"/>
     </include> -->
+    <param name="robot_description" command="$(find xacro)/xacro $(find arm_control)/urdf/sawyer.urdf.xacro electric_gripper:=true" />
+    <include file="$(find object_detection)/launch/object_detection.launch">
+        <arg name="camera" value="realsense"/>
+        <arg name="use_rviz" value="false"/>
+    </include>
     <node pkg="intera_interface" type="joint_trajectory_action_server.py" name="joint_trajectory_action_server" />
-    <include file="$(find sawyer_moveit_config)/launch/sawyer_moveit.launch" >
+    <include file="$(find sawyer_moveit_config)/launch/sawyer_moveit.launch">
         <arg name="electric_gripper" value="true"/>
+        <arg name="use_rviz" value="true"/>
         <arg name="rviz_config" value="$(find arm_control)/config/arm_moveit.rviz"/>
     </include>
     <node pkg="arm_control" type="sawyer_mover.py" name="sawyer_mover" />
+    <node pkg="arm_control" type="move_gripper.py" name="move_gripper" />
 </launch>

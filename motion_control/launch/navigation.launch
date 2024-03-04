@@ -9,7 +9,7 @@
         <param name="base_global_planner" type="string" value="navfn/NavfnROS" />
         <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS"/>
         <remap from="odom" to="odometry/filtered" />
-        <remap from="front/scan" to="ridgeback/front/scan"/>
-        <remap from="rear/scan" to="ridgeback/rear/scan" />
+        <!-- <remap from="front/scan" to="ridgeback/front/scan"/> -->
+        <!-- <remap from="rear/scan" to="ridgeback/rear/scan" /> -->
     </node>
 </launch>

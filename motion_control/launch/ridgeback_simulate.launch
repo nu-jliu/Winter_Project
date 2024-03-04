@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <launch>
-    <include file="$(find ridgeback_viz)/launch/view_robot.launch">
+    <include file="$(find ridgeback_gazebo)/launch/ridgeback_world.launch" />
+    <!-- <include file="$(find ridgeback_viz)/launch/view_robot.launch">
         <arg name="config" value="navigation"/>
     </include>
 
-    <include file="$(find ridgeback_navigation)/launch/odom_navigation_demo.launch" />
-    <include file="$(find ridgeback_gazebo)/launch/ridgeback_world.launch" />
+    <include file="$(find ridgeback_navigation)/launch/odom_navigation_demo.launch" /> -->
+    <include file="$(find motion_control)/launch/navigation.launch"/>
 </launch>
