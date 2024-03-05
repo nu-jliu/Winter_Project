@@ -189,6 +189,7 @@ catkin_install_python(PROGRAMS
 install(DIRECTORY
   launch
   params
+  rviz
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 

@@ -3,6 +3,7 @@ import rospy
 import math
 
 from geometry_msgs.msg import PoseStamped, PoseWithCovarianceStamped
+from sensor_msgs.msg import JointState
 from tf.transformations import euler_from_quaternion
 
 

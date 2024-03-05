@@ -188,11 +188,14 @@ install(TARGETS ${PROJECT_NAME}_node
 #   FILES_MATCHING PATTERN "*.h"
 #   PATTERN ".svn" EXCLUDE
 # )
-install(DIRECTORY config/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/config
-)
-install(DIRECTORY urdf/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/urdf
+# install(DIRECTORY config/
+#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/config
+# )
+install(DIRECTORY
+  config
+  launch
+  urdf
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
