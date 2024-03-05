@@ -3,7 +3,10 @@
     <!-- <include file="$(find sawyer_gazebo)/launch/sawyer_world.launch">
         <arg name="electric_gripper" value="true"/>
     </include> -->
-    <param name="robot_description" command="$(find xacro)/xacro $(find arm_control)/urdf/sawyer.urdf.xacro electric_gripper:=true" />
+    <!-- sawyer only -->
+    <!-- <param name="robot_description" command="$(find xacro)/xacro $(find arm_control)/urdf/sawyer.urdf.xacro electric_gripper:=true" /> -->
+    <!-- sawback -->
+    <param name="robot_description" command="$(find xacro)/xacro $(find manipulator_description)/urdf/sawback.urdf.xacro"/>
     <include file="$(find object_detection)/launch/object_detection.launch">
         <arg name="camera" value="realsense"/>
         <arg name="use_rviz" value="false"/>

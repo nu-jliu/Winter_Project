@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="BB2" params="camera_link:=bb2_origin camera_optical_link:=bb2_optical_link">
+    <gazebo reference="${camera_link}">
+      <sensor name="bumblebee" type="depth">
+        <update_rate>30</update_rate>
+        <camera>
+          <pose>0 0 0 0 0 0</pose>
+          <horizontal_fov>1.047198</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.05</near>
+            <far>3</far>
+          </clip>
+        </camera>
+        <plugin name="bumblebee_controller" filename="libgazebo_ros_openni_kinect.so">
+          <baseline>0.2</baseline>
+          <alwaysOn>true</alwaysOn>
+          <updateRate>1.0</updateRate>
+          <cameraName>bumblebee</cameraName>
+          <imageTopicName>color/image_raw</imageTopicName>
+          <cameraInfoTopicName>color/camera_info</cameraInfoTopicName>
+          <depthImageTopicName>depth/image_raw</depthImageTopicName>
+          <depthImageInfoTopicName>depth/camera_info</depthImageInfoTopicName>
+          <pointCloudTopicName>depth/points</pointCloudTopicName>
+          <frameName>${camera_optical_link}</frameName>
+          <pointCloudCutoff>0.5</pointCloudCutoff>
+          <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
+          <distortionK1>0.00000001</distortionK1>
+          <distortionK2>0.00000001</distortionK2>
+          <distortionK3>0.00000001</distortionK3>
+          <distortionT1>0.00000001</distortionT1>
+          <distortionT2>0.00000001</distortionT2>
+          <CxPrime>0</CxPrime>
+          <Cx>0</Cx>
+          <Cy>0</Cy>
+          <focalLength>0</focalLength>
+          <hackBaseline>0</hackBaseline>
+        </plugin>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+  <!-- Create link for Bumblebee mesh -->
+  <link name="bb2_mesh">
+    <visual>
+      <geometry>
+        <mesh filename="package://manipulator_description/meshes/bb2_stereo_cam.dae"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="base_to_bb2_mesh" type="fixed">
+    <parent link="mid_mount" />
+    <child link="bb2_mesh" />
+    <origin xyz="0.43 0 0" rpy="0 0 1.5708" />
+  </joint>
+  <!-- Create a link between the BB2 mesh and sensor origin -->
+  <link name="bb2_origin" />
+  <joint name="bb2_mesh_to_bb2_origin" type="fixed">
+    <parent link="bb2_mesh" />
+    <child link="bb2_origin" />
+    <origin xyz="0.001 0 0.07" rpy="0 0 ${-1.5708}" />
+  </joint>
+  <link name="bb2_optical_link" />
+  <joint name="bb2_origin_to_bb2_camera" type="fixed">
+    <parent link="bb2_origin" />
+    <child link="bb2_optical_link" />
+    <origin xyz="0 0 0" rpy="${-1.5708} 0 ${-1.5708}" />
+  </joint>
+  <link name="bb2_left_optical_link" />
+  <joint name="bb2_left_optical_joint" type="fixed">
+    <parent link="bb2_optical_link" />
+    <child link="bb2_left_optical_link" />
+    <origin xyz="-0.06 0 0" rpy="0 0 0" />
+  </joint>
+  <xacro:BB2 camera_link="/bb2_origin" camera_optical_link="/bb2_optical_link"/>
+</robot>

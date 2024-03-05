@@ -6,6 +6,7 @@
     <group if="$(eval arg('camera') == 'realsense')">
         <include file="$(find realsense2_camera)/launch/rs_camera.launch">
             <arg name="enable_pointcloud" value="true"/>
+            <!-- <arg name="tf_prefix" value="rs_d435"/> -->
         </include>
         <param name="image_topic" value="camera/color/image_raw"/>
         <param name="pointcloud_topic" value="camera/depth/color/points"/>
