@@ -57,7 +57,7 @@ class ObjectDetection:
 
         tf_static.header.stamp = rospy.Time.now()
         tf_static.header.frame_id = "base"
-        tf_static.child_frame_id = "camera_link"
+        tf_static.child_frame_id = "realsense_link"
         tf_static.transform.translation.x = 205e-3  # - 0.011
         tf_static.transform.translation.y = -50e-3  # - 0.018
         tf_static.transform.translation.z = 120e-3  # - 0.013

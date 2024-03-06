@@ -168,9 +168,9 @@ class SawyerMoverNode:
             self.move_group.stop()
             self.move_group.clear_pose_targets()
 
-            response.success = True
             self.prev_goal = copy.deepcopy(self.goal)
             self.goal = None
+            response.success = True
         else:
             response.success = False
             response.message = "Goal not set"
@@ -221,6 +221,8 @@ class SawyerMoverNode:
             self.move_group.stop()
             self.move_group.clear_pose_targets()
 
+            self.goal = None
+            self.prev_goal = None
             response.success = True
         else:
             response.success = False
