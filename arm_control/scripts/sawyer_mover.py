@@ -88,8 +88,8 @@ class SawyerMoverNode:
             queue_size=10,
         )
 
-        self.pub_new_joint_state = rospy.Publisher(
-            "/new/joint_states",
+        self.pub_robot_joint_states = rospy.Publisher(
+            "/robot/joint_states",
             JointState,
             queue_size=10,
         )
@@ -126,10 +126,12 @@ class SawyerMoverNode:
         response = TriggerResponse()
 
         if self.goal is not None:
+            rospy.loginfo(f"Received goal request, {self.goal}")
+
             goal_standoff = Pose()
             goal_standoff.position.x = self.goal.x + 0.05
             goal_standoff.position.y = self.goal.y
-            goal_standoff.position.z = 0.3
+            goal_standoff.position.z = self.goal.z + 0.3
 
             q = quaternion_from_euler(math.pi, 0.0, 0.0)
 
@@ -184,7 +186,7 @@ class SawyerMoverNode:
             goal_standoff = Pose()
             goal_standoff.position.x = self.prev_goal.x + 0.05
             goal_standoff.position.y = self.prev_goal.y
-            goal_standoff.position.z = 0.5
+            goal_standoff.position.z = self.prev_goal.z + 0.2
 
             q = quaternion_from_euler(math.pi, 0.0, 0.0)
 
@@ -259,10 +261,10 @@ class SawyerMoverNode:
         self.goal = msg.point
 
     def sub_robot_joint_states_callback(self, msg: JointState):
-        new_joint_states = copy.deepcopy(msg)
-        new_joint_states.header.stamp = rospy.Time.now()
+        joint_states = copy.deepcopy(msg)
+        joint_states.header.stamp = rospy.Time.now()
 
-        self.pub_new_joint_state.publish(new_joint_states)
+        self.pub_robot_joint_states.publish(joint_states)
 
 
 if __name__ == "__main__":

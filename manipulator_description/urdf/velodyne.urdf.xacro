@@ -37,7 +37,7 @@
         </ray>
         <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_velodyne_laser.so">
           <topicName>${topic}</topicName>
-      	  <frameName>${name}</frameName>
+          <frameName>${name}</frameName>
           <min_range>0.9</min_range>
           <max_range>130.0</max_range>
           <gaussianNoise>0.008</gaussianNoise>
@@ -50,7 +50,7 @@
   <link name="velodyne_mesh">
     <visual>
       <geometry>
-        <mesh filename="package://nuridgeback_description/meshes/vlp16_assy.stl"/>
+        <mesh filename="package://manipulator_description/meshes/vlp16_assy.stl"/>
       </geometry>
       <material name="light_grey">
         <color rgba="0.4 0.4 0.4 1"/>
@@ -58,15 +58,15 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://nuridgeback_description/meshes/vlp16_assy.stl"/>
+        <mesh filename="package://manipulator_description/meshes/vlp16_assy.stl"/>
       </geometry>
     </collision>
   </link>
 
   <joint name="base_to_lidar_mesh" type="fixed">
-  <parent link="mid_mount" />
-  <child link="velodyne_mesh" />
-  <origin xyz="0.365 0 0" rpy="0 0 0" />
+    <parent link="mid_mount" />
+    <child link="velodyne_mesh" />
+    <origin xyz="0.365 0 0" rpy="0 0 0" />
   </joint>
 
   <!-- Create a link between the VLP16 mesh and sensor origin -->

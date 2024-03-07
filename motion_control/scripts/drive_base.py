@@ -48,8 +48,8 @@ class DriveBase:
 
         theta_goal = euler_from_quaternion(quat)[2]
 
-        x_goal = x_goal - 1.5 * math.cos(theta_goal)
-        y_goal = y_goal - 1.5 * math.sin(theta_goal)
+        x_goal = x_goal - 0.3 * math.cos(theta_goal)
+        y_goal = y_goal - 0.3 * math.sin(theta_goal)
 
         self.nav_goal = PoseStamped()
         self.nav_goal.header.stamp = rospy.Time.now()

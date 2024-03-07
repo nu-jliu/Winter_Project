@@ -9,5 +9,5 @@
     </include> -->
     <include file="$(find motion_control)/launch/navigation.launch"/>
     <node pkg="motion_control" type="drive_base.py" name="drive_base" />
-
+    <node pkg="motion_control" type="joint_states_republisher.py" name="joint_states_republisher" />
 </launch>
