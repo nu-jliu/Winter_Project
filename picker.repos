@@ -1,0 +1,10 @@
+repositories:
+  Winter_Project:
+    type: git
+    url: git@github.com:nu-jliu/Winter_Project.git
+    version: main
+  sawyer_moveit:
+    type: git
+    url: git@github.com:nu-jliu/sawyer_moveit.git
+    version: allen/Winter_project
+

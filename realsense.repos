@@ -1,0 +1,9 @@
+repositories:
+  ddynamic_reconfigure:
+    type: git
+    url: https://github.com/pal-robotics/ddynamic_reconfigure.git
+    version: kinetic-devel
+  realsense-ros:
+    type: git
+    url: https://github.com/IntelRealSense/realsense-ros.git
+    version: ros1-legacy
