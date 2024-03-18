@@ -49,7 +49,6 @@ class SawyerMoverNode:
         rospy.loginfo("Starting SawyerMoverNode as sawyer_mover.")
 
         self.goal: Point = None
-        self.prev_goal: Point = None
 
         moveit_commander.roscpp_initialize(sys.argv)
         self.robot = moveit_commander.RobotCommander()
@@ -170,7 +169,6 @@ class SawyerMoverNode:
             self.move_group.stop()
             self.move_group.clear_pose_targets()
 
-            self.prev_goal = copy.deepcopy(self.goal)
             self.goal = None
             response.success = True
         else:
@@ -182,11 +180,11 @@ class SawyerMoverNode:
     def srv_place_callback(self, request: TriggerRequest):
         response = TriggerResponse()
 
-        if self.goal is not None and self.prev_goal is not None:
+        if self.goal is not None:
             goal_standoff = Pose()
-            goal_standoff.position.x = self.prev_goal.x + 0.05
-            goal_standoff.position.y = self.prev_goal.y
-            goal_standoff.position.z = self.prev_goal.z + 0.2
+            goal_standoff.position.x = self.goal.x + 0.05
+            goal_standoff.position.y = self.goal.y
+            goal_standoff.position.z = self.goal.z + 0.3
 
             q = quaternion_from_euler(math.pi, 0.0, 0.0)
 
@@ -209,10 +207,10 @@ class SawyerMoverNode:
             goal_drop.position.y = self.goal.y
             goal_drop.position.z = self.goal.z + 0.1
 
-            goal_drop.orientation.x = math.sqrt(2.0) / 2.0
-            goal_drop.orientation.y = math.sqrt(2.0) / 2.0
-            goal_drop.orientation.z = 0.0
-            goal_drop.orientation.w = 0.0
+            goal_drop.orientation.x = q[0]
+            goal_drop.orientation.y = q[1]
+            goal_drop.orientation.z = q[2]
+            goal_drop.orientation.w = q[3]
 
             self.move_group.set_pose_target(goal_drop)
             plan = self.move_group.go(wait=True)

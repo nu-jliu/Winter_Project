@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- <group ns="interbotix"> -->
+    <include file="$(find interbotix_xsarm_control)/launch/xsarm_control.launch">
+        <arg name="robot_model" value="px100"/>
+        <arg name="use_world_frame" value="false"/>
+        <arg name="use_rviz" value="false"/>
+    </include>
+
+    <node pkg="vision_control" type="move_cam.py" name="move_cam" />
+    <node pkg="tf2_ros" type="static_transform_publisher" name="base_to_px100" args="0.140 -0.3365 0.008 0 0 0 1 mid_mount px100/base_link"/>
+
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+        <arg name="enable_pointcloud" value="true"/>
+        <arg name="camera" value="d435"/>
+        <!-- <arg name="serial_no" value="_141722071471"/> -->
+    </include>
+    <!-- </group> -->
+</launch>

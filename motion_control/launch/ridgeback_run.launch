@@ -1,13 +1,19 @@
 <?xml version="1.0"?>
 <launch>
-    <include file="$(find motion_control)/launch/description.launch">
+    <!-- <arg name="motor_configs" default="$(find interbotix_xsarm_control)/config/$(arg robot_model).yaml"/> -->
+    <!-- <arg name="mode_configs" default="$(find interbotix_xsarm_control)/config/modes.yaml"/> -->
+
+    <!-- <include file="$(find motion_control)/launch/description.launch">
         <arg name="use_jsp_gui" value="false"/>
 
-    </include>
-    <!-- <include file="$(find ridgeback_viz)/launch/view_robot.launch">
-        <arg name="config" value="navigation"/>
     </include> -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find motion_control)/rviz/navigation.rviz"/>
+
     <include file="$(find motion_control)/launch/navigation.launch"/>
+
     <node pkg="motion_control" type="drive_base.py" name="drive_base" />
     <node pkg="motion_control" type="joint_states_republisher.py" name="joint_states_republisher" />
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_republisher" />
+
+    <include file="$(find vision_control)/launch/vision_control.launch" />
 </launch>

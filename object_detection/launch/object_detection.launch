@@ -6,10 +6,11 @@
     <group if="$(eval arg('camera') == 'realsense')">
         <include file="$(find realsense2_camera)/launch/rs_camera.launch">
             <arg name="enable_pointcloud" value="true"/>
-            <arg name="tf_prefix" value="realsense"/>
+            <arg name="camera" value="d435_front"/>
+            <arg name="serial_no" value="_938422073373"/>
         </include>
-        <param name="image_topic" value="camera/color/image_raw"/>
-        <param name="pointcloud_topic" value="camera/depth/color/points"/>
+        <param name="image_topic" value="d435_front/color/image_raw"/>
+        <param name="pointcloud_topic" value="d435_front/depth/color/points"/>
     </group>
     <group if="$(eval arg('camera') == 'bumblebee')">
         <include file="$(find motion_control)/launch/description.launch" />

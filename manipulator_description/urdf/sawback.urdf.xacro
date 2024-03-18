@@ -5,6 +5,7 @@
   <xacro:arg name="electric_gripper" default="true"/>
   <xacro:arg name="pedestal" default="false"/>
   <xacro:arg name="static" default="false"/>
+  <xacro:arg name="px100" default="false"/>
 
   <!-- Ridgeback -->
   <xacro:include filename="$(find manipulator_description)/urdf/nuridgeback.urdf.xacro"/>
@@ -23,4 +24,13 @@
     <parent link="mount_link"/>
     <child link="base"/>
   </joint>
+
+  <xacro:if value="$(arg px100)">
+    <xacro:include filename="$(find interbotix_xsarm_descriptions)/urdf/px100.urdf.xacro"/>
+    <joint name="joint_base_to_px100" type="fixed">
+      <parent link="mid_mount"/>
+      <child link="px100/base_link"/>
+      <origin xyz="0.140 -0.3365 0.008" rpy="0.0 0.0 0.0"/>
+    </joint>
+  </xacro:if>
 </robot>

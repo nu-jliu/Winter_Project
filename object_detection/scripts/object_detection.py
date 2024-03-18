@@ -27,7 +27,9 @@ class ObjectDetection:
 
         self.image_topic = rospy.get_param("image_topic")
         self.points_topic = rospy.get_param("pointcloud_topic")
-        self.depth_topic = rospy.get_param("depth_topic", "camera/depth/image_rect_raw")
+        self.depth_topic = rospy.get_param(
+            "depth_topic", "realsense/depth/image_rect_raw"
+        )
 
         self.sub_pointcloud = rospy.Subscriber(
             self.points_topic,
@@ -57,7 +59,7 @@ class ObjectDetection:
 
         tf_static.header.stamp = rospy.Time.now()
         tf_static.header.frame_id = "base"
-        tf_static.child_frame_id = "realsense_link"
+        tf_static.child_frame_id = "d435_front_link"
         tf_static.transform.translation.x = 205e-3  # - 0.011
         tf_static.transform.translation.y = -50e-3  # - 0.018
         tf_static.transform.translation.z = 120e-3  # - 0.013

@@ -6,14 +6,14 @@
     <!-- sawback -->
     <param name="robot_description" command="$(find xacro)/xacro $(find manipulator_description)/urdf/sawback.urdf.xacro"/>
 
-    <include file="$(find object_detection)/launch/object_detection.launch">
+    <!-- <include file="$(find object_detection)/launch/object_detection.launch">
         <arg name="camera" value="realsense"/>
         <arg name="use_rviz" value="false"/>
-    </include>
+    </include> -->
     <node pkg="intera_interface" type="joint_trajectory_action_server.py" name="joint_trajectory_action_server" />
     <include file="$(find sawyer_moveit_config)/launch/sawyer_moveit.launch">
         <arg name="electric_gripper" value="true"/>
-        <arg name="use_rviz" value="false"/>
+        <arg name="use_rviz" value="true"/>
         <arg name="rviz_config" value="$(find arm_control)/config/arm_moveit.rviz"/>
         <!-- <arg name="robot" default="sawyer"/> -->
         <arg name="robot" value="sawback"/>
