@@ -3,11 +3,11 @@
  - MSR 2024
 
 ## Package Description
- - `object_detection` -
- - `arm_control`
- - `motion_control`
- - `vision_control`
- - `picker_interfaces`
+ - `object_detection` - Detects the object to grasp
+ - `arm_control` - Controls the motion of the robot arm
+ - `motion_control` - Controls the motion of the mobile base
+ - `vision_control` - Controls the motion of the Camera arm
+ - `picker_interfaces` - The interfaces for the software
 
  ## Package Setup
 
