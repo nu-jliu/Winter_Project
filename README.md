@@ -2,6 +2,9 @@
  - **Author**: Allen Liu
  - MSR 2024
 
+## Demo Video
+<video src="https://github.com/nu-jliu/Winter_Project/assets/49068329/fa3789e9-a081-4785-a3fe-994f9d4cf3a8" controls></video>
+
 ## Package Description
  - `object_detection` - Detects the object to grasp
  - `arm_control` - Controls the motion of the robot arm
